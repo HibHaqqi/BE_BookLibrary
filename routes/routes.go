@@ -1,7 +1,8 @@
 package routes
 
 import (
-	bookcontroller "book-library/controllers"
+	authcontroller "book-library/controllers/auth"
+	bookcontroller "book-library/controllers/service"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,5 +17,12 @@ func SetupRoutes(route *gin.Engine) {
 		bookRoutes.POST("", bookcontroller.Create)
 		bookRoutes.PUT("/:id", bookcontroller.Update)
 		bookRoutes.DELETE("/:id", bookcontroller.Delete)
+	}
+
+	authRoutes := api.Group("/auth")
+	{
+		authRoutes.POST("", authcontroller.Register)
+		authRoutes.POST("/login", authcontroller.Login)
+
 	}
 }

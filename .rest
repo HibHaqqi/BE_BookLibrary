@@ -23,3 +23,35 @@ Content-Type: application/json
 	"PublishYear" : 2003,
     "Description":  "Harry Potter and the Order of the Phoenix is a fantasy novel written by British author J. K. Rowling and the fifth novel in the Harry Potter series. It follows Harry Potter's struggles through his fifth year at Hogwarts School of Witchcraft and Wizardry, including the surreptitious return of the antagonist Lord Voldemort, O.W.L. exams, and an obstructive Ministry of Magic."
 }
+
+###
+POST http://localhost:8000/api/books
+Content-Type: application/json
+
+{
+    "Title" : "Harry Potter goblet of Fire",
+    "Author" : "JK Rowling",
+	"PublishYear" : 2000,
+    "Description":  "Harry's fourth year at Hogwarts School of Witchcraft and Wizardry, the book follows Harry and his friends as they discover the Triwizard Tournament, a dangerous competition between three schools"
+}
+
+###
+POST http://localhost:8000/api/auth
+Content-Type: application/json
+
+{
+    "Name" : "Harry Potter goblet of Fire",
+    "Email" : "haqqi08@gmail.com",
+	"Phone":  "085733999063",
+    "Password" : "rahasia",
+    "Role": "admin"
+}
+
+###
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "Email" : "haqqi0@gmail.com",
+	"Password" : "rahasia"
+}

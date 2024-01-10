@@ -1,1 +1,12 @@
 GET http://localhost:8000/api/books
+
+###
+POST http://localhost:8000/api/books
+Content-Type: application/json
+
+{
+    "Title" : "Harry Potter goblet of Fire",
+    "Author" : "JK Rowling",
+	"PublishYear" : 2000,
+    "Description":  "Harry's fourth year at Hogwarts School of Witchcraft and Wizardry, the book follows Harry and his friends as they discover the Triwizard Tournament, a dangerous competition between three schools"
+}

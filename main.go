@@ -1,8 +1,8 @@
 package main
 
 import (
-	bookcontroller "book-library/controllers"
 	"book-library/models"
+	"book-library/routes"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -12,7 +12,7 @@ func main() {
 	godotenv.Load()
 	models.ConnectDatabase()
 	route := gin.Default()
-	route.GET("/api/books", bookcontroller.Index)
+	routes.SetupRoutes(route)
 
 	port := ":8000"
 	route.Run(port)

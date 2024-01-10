@@ -1,0 +1,17 @@
+entry = "main.go"
+
+# Build command
+# (default is "go build -o <entry>-debug")
+build_cmd = "go build -o main-debug"
+
+# Binary file
+# (default is "<entry>-debug" or "<entry>" if "-debug" suffix is not found)
+bin = "main-debug"
+
+# Working directory
+# (default is "." or the directory containing the entry file)
+working_dir = "."
+
+[[monitor]]
+# Paths to watch
+dirs = ["."]

@@ -1,6 +1,8 @@
 package view
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -9,7 +11,7 @@ func SetupViewRoutes(route *gin.RouterGroup) {
 
 	// Add your view routes as needed
 	views.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "Welcome to the home page"})
+		c.HTML(http.StatusOK, "base.html", gin.H{"Title": "Home Page"})
 	})
 
 }

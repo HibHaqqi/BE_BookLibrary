@@ -13,6 +13,8 @@ func main() {
 	godotenv.Load()
 	models.ConnectDatabase()
 	route := gin.Default()
+
+	route.LoadHTMLGlob("templates/*.html")
 	// Set up API routes
 	api.SetupAPIRoutes(route.Group("/api"))
 

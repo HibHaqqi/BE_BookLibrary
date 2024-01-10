@@ -14,5 +14,7 @@ func SetupRoutes(route *gin.Engine) {
 	{
 		bookRoutes.GET("", bookcontroller.Index)
 		bookRoutes.POST("", bookcontroller.Create)
+		bookRoutes.PUT("/:id", bookcontroller.Update)
+		bookRoutes.DELETE("/:id", bookcontroller.Delete)
 	}
 }

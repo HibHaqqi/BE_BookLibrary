@@ -1,6 +1,9 @@
 GET http://localhost:8000/api/books
 
 ###
+DELETE  http://localhost:8000/api/books/2
+
+###
 POST http://localhost:8000/api/books
 Content-Type: application/json
 
@@ -9,4 +12,14 @@ Content-Type: application/json
     "Author" : "JK Rowling",
 	"PublishYear" : 2000,
     "Description":  "Harry's fourth year at Hogwarts School of Witchcraft and Wizardry, the book follows Harry and his friends as they discover the Triwizard Tournament, a dangerous competition between three schools"
+}
+###
+PUT http://localhost:8000/api/books/2
+Content-Type: application/json
+
+{
+    "Title" : "Harry Potter Order Of Phoenix",
+    "Author" : "JK Rowling",
+	"PublishYear" : 2003,
+    "Description":  "Harry Potter and the Order of the Phoenix is a fantasy novel written by British author J. K. Rowling and the fifth novel in the Harry Potter series. It follows Harry Potter's struggles through his fifth year at Hogwarts School of Witchcraft and Wizardry, including the surreptitious return of the antagonist Lord Voldemort, O.W.L. exams, and an obstructive Ministry of Magic."
 }

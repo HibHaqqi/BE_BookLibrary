@@ -1,9 +1,11 @@
 package models
 
+import "gorm.io/gorm"
+
 type Book struct {
-	Id          int64  `gorm:"primaryKey" json:"id"`
-	Title       string `gorm:"type:varchar(300)" json:"title"`
-	Author      string `gorm:"type:varchar(300)" json:"author"`
-	PublishYear string `gorm:"type:varchar(300)" json:"publish_year"`
-	Deskripsi   string `gorm:"type:text" json:"deskripsi"`
+	gorm.Model
+	Title       string `gorm:"not null"`
+	Author      string `gorm:"not null"`
+	PublishYear int    `gorm:"not null"`
+	Description string
 }

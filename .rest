@@ -36,7 +36,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8000/api/auth
+POST http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {

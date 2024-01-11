@@ -11,7 +11,7 @@ func SetupViewRoutes(route *gin.RouterGroup) {
 
 	// Add your view routes as needed
 	views.GET("/", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "base.html", gin.H{"Title": "Home Page"})
+		c.HTML(http.StatusOK, "tablebook.html", gin.H{"Title": "Home Page"})
 	})
 
 }

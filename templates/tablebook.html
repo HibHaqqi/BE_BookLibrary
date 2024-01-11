@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Book List</title>
+</head>
+
+<body>
+    {{template "navbar.html" .}}
+    <div class="container mt-5">
+        <h1 class="mb-4">Book List</h1>
+
+        <!-- Search box -->
+        <div class="form-group">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search by title or author">
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Publish Year</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="bookTableBody">
+                <!-- Book data will be dynamically inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Function to filter books based on search input
+        function filterBooks() {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput.value.toLowerCase();
+
+            // Filter books based on title or author containing the search term
+            const filteredBooks = data.Book.filter(book =>
+                book.Title.toLowerCase().includes(searchTerm) ||
+                book.Author.toLowerCase().includes(searchTerm)
+            );
+
+            // Clear the existing content in the table body
+            const tableBody = document.getElementById('bookTableBody');
+            tableBody.innerHTML = "";
+
+            // Iterate through the filtered list of books and append rows to the table
+            filteredBooks.forEach(book => {
+                const row = `
+                    <tr>
+                        <td>${book.Title}</td>
+                        <td>${book.Author}</td>
+                        <td>${book.PublishYear}</td>
+                        <td>${book.Description}</td>
+                    </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        // Fetch data from the API and initially populate the table
+        let data; // Declare a variable to store the fetched data
+
+        fetch('http://localhost:8000/api/books')
+            .then(response => response.json())
+            .then(apiData => {
+                data = apiData; // Store the fetched data in the variable
+                filterBooks(); // Initially populate the table based on the fetched data
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+        // Add an event listener to the search input for live filtering
+        document.getElementById('searchInput').addEventListener('input', filterBooks);
+    </script>
+</body>
+
+</html>

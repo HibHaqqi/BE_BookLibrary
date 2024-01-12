@@ -24,6 +24,10 @@ func SetupAPIRoutes(route *gin.RouterGroup) {
 		authRoutes.POST("/register", authcontroller.Register)
 		authRoutes.POST("/login", authcontroller.Login)
 	}
+	ratingRoutes := api.Group("/rate")
+	{
+		ratingRoutes.POST("/", servicecontroller.SubmitRating)
+	}
 
 	// Add more API routes as needed
 }

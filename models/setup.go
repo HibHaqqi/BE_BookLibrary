@@ -25,7 +25,7 @@ func ConnectDatabase() {
 		panic("Failed to connect to database")
 	}
 
-	database.AutoMigrate(&Book{}, &Member{}, &LoanBook{})
+	database.AutoMigrate(&Book{}, &Member{}, &LoanBook{}, &Rating{})
 
 	DB = database
 }

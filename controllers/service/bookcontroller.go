@@ -1,4 +1,4 @@
-package bookcontroller
+package service
 
 import (
 	"book-library/models"

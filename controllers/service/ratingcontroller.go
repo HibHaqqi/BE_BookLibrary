@@ -19,7 +19,7 @@ func SubmitRating(c *gin.Context) {
 	createRating(input)
 
 	// Calculate updated average rating and total ratings
-	averageRating, totalRatings := calculateUpdatedRatings(input.BookId)
+	averageRating, totalRatings := CalculateUpdatedRatings(input.BookId)
 
 	c.JSON(http.StatusOK, gin.H{
 		"averageRating": averageRating,
@@ -38,7 +38,7 @@ func createRating(input models.Rating) {
 }
 
 // CalculateUpdatedRatings calculates the updated average rating and total ratings for a book.
-func calculateUpdatedRatings(bookId uint) (float64, int) {
+func CalculateUpdatedRatings(bookId uint) (float64, int) {
 	var ratings []models.Rating
 	result := models.DB.Where("book_id = ?", bookId).Find(&ratings)
 	if result.Error != nil {

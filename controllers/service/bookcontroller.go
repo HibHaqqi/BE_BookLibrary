@@ -8,10 +8,31 @@ import (
 )
 
 func Index(c *gin.Context) {
+	// Fetch all books from the database
 	var books []models.Book
-
 	models.DB.Find(&books)
-	c.JSON(http.StatusOK, gin.H{"Book": books})
+
+	// Create a map to store average ratings for each book
+	averageRatings := make(map[uint]float64)
+	totalRatings := make(map[uint]int)
+	// Calculate average rating for each book
+	for _, book := range books {
+		averageRating, totalRating := CalculateUpdatedRatings(book.ID)
+		averageRatings[book.ID] = averageRating
+		totalRatings[book.ID] = totalRating
+	}
+
+	// Create a response structure to include both book details and average ratings
+	var response []gin.H
+	for _, book := range books {
+		response = append(response, gin.H{
+			"book":          book,
+			"averageRating": averageRatings[book.ID],
+			"totalRating":   totalRatings[book.ID],
+		})
+	}
+
+	c.JSON(http.StatusOK, gin.H{"books": response})
 }
 func Create(c *gin.Context) {
 	var input models.Book

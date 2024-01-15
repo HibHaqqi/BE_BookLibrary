@@ -7,32 +7,43 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type BookInfo struct {
+	ID            uint
+	Title         string
+	Author        string
+	PublishYear   int
+	Description   string
+	AverageRating float64
+}
+
 func Index(c *gin.Context) {
 	// Fetch all books from the database
 	var books []models.Book
 	models.DB.Find(&books)
 
-	// Create a map to store average ratings for each book
-	averageRatings := make(map[uint]float64)
-	totalRatings := make(map[uint]int)
-	// Calculate average rating for each book
+	var bookInfoList []BookInfo
 	for _, book := range books {
-		averageRating, totalRating := CalculateUpdatedRatings(book.ID)
-		averageRatings[book.ID] = averageRating
-		totalRatings[book.ID] = totalRating
+		// Capture both values returned by CalculateUpdatedRatings
+		averageRating, _ := CalculateUpdatedRatings(book.ID)
+
+		// Populate BookInfo struct with necessary fields
+		bookInfo := BookInfo{
+			ID:            book.ID,
+			Title:         book.Title,
+			Author:        book.Author,
+			PublishYear:   book.PublishYear,
+			Description:   book.Description,
+			AverageRating: averageRating,
+		}
+
+		// Append to the slice
+		bookInfoList = append(bookInfoList, bookInfo)
 	}
 
-	// Create a response structure to include both book details and average ratings
-	var response []gin.H
-	for _, book := range books {
-		response = append(response, gin.H{
-			"book":          book,
-			"averageRating": averageRatings[book.ID],
-			"totalRating":   totalRatings[book.ID],
-		})
-	}
-
-	c.JSON(http.StatusOK, gin.H{"books": response})
+	// Render HTML template with the book information
+	c.JSON(http.StatusOK, gin.H{
+		"Books": bookInfoList,
+	})
 }
 func Create(c *gin.Context) {
 	var input models.Book

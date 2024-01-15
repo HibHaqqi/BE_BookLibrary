@@ -15,6 +15,8 @@ func main() {
 	route := gin.Default()
 
 	route.LoadHTMLGlob("templates/*.html")
+	// Serve static files
+	route.Static("/static", "./static")
 	// Set up API routes
 	api.SetupAPIRoutes(route.Group("/api"))
 

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <title>Book Modal Card</title>
+</head>
+<body>
+
+    <div class="modal fade" id="bookDetailsModal" tabindex="-1" role="dialog" aria-labelledby="bookDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookDetailsModalLabel">Book Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <strong>Title:</strong> <span id="modalBookTitle"></span>
+                    </div>
+                    <div>
+                        <strong>Author:</strong> <span id="modalBookAuthor"></span>
+                    </div>
+                    <div>
+                        <strong>Publish Year:</strong> <span id="modalBookPublishYear"></span>
+                    </div>
+                    <div>
+                        <strong>Description:</strong> <span id="modalBookDescription"></span>
+                    </div>
+                    <div>
+                        <strong>Rating:</strong>
+                        <div class="rateyo-readonly-widg" id="modalRateYo"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Function to show book details in the modal
+        function showBookDetails(bookID) {
+            // Check if data is available
+            if (!data) {
+                console.error("Data is not available. Make sure to fetch data first.");
+                return;
+            }
+
+            const book = data.Books.find((b) => b.ID === bookID);
+
+            // Update the modal content with book details
+            $("#modalBookTitle").text(book.Title);
+            $("#modalBookAuthor").text(book.Author);
+            $("#modalBookPublishYear").text(book.PublishYear);
+            $("#modalBookDescription").text(book.Description);
+
+            // Initialize RateYo with options
+            $("#modalRateYo").rateYo({
+                rating: book.AverageRating,
+                readOnly: false,
+                starWidth: "20px",
+                onChange: function (rating, rateYoInstance) {
+                    // Handle rating change (e.g., update the rating in your data)
+                    console.log(`Book ID ${book.ID} rated: ${rating}`);
+
+                    // Send the rating to the server if needed
+                    // submitRating(book.ID, rating);
+                },
+            });
+
+            // Show the book details modal
+            $("#bookDetailsModal").modal("show");
+        }
+
+        // Fetch data from the API and initially populate the table
+        let data; // Declare a variable to store the fetched data
+
+        fetch("http://localhost:8000/api/books")
+            .then((response) => response.json())
+            .then((apiData) => {
+                data = apiData; // Store the fetched data in the variable
+                // Optionally, update the UI based on the data
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+
+        // Attach the showBookDetails function to a button click event or other trigger
+        // For example, if you have a button with ID "detailsButton":
+        // $("#detailsButton").click(function() {
+        //     const bookID = /* get the book ID */;
+        //     showBookDetails(bookID);
+        // });
+    });
+</script>   
+</body>
+</html>
